@@ -81,6 +81,8 @@ volume.addEventListener('input', changeVol)
 progressContainer.addEventListener('click', setProgress)
 
 
+
+
 // Progress
 
 function progres(e) {
@@ -117,7 +119,6 @@ function setProgress(e) {
 
 function changeVol(e) {
     const volValue = Number(volume.value) / volume.max
-    console.log(volValue)
     audio.volume = volValue
     if (volValue == 0){
         volumeIcon.setAttribute('class', 'fas fa-volume-xmark')
@@ -127,6 +128,21 @@ function changeVol(e) {
         volumeIcon.setAttribute('class', 'fas fa-volume-high')
     } 
 }
+
+volumeIcon.addEventListener('click', () => {
+    if (audio.volume != 0){
+        audio.volume = 0
+        volumeIcon.setAttribute('class', 'fas fa-volume-xmark')
+    } 
+    else if (audio.volume == 0 && +volume.value != 0){
+        if (+volume.value < 5) {
+            volumeIcon.setAttribute('class', 'fas fa-volume-low')
+        } else {
+            volumeIcon.setAttribute('class', 'fas fa-volume-high')
+        }
+        audio.volume = +volume.value / volume.max
+    }
+})
 
 // Volume range style
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
